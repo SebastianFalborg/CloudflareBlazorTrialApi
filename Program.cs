@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,17 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
+    app.UseCors(policy =>
+        policy.WithOrigins("https://localhost:7231")
+        .AllowAnyMethod()
+        .WithHeaders(HeaderNames.ContentType));
+}
+else
+{
+    app.UseCors(policy =>
+    policy.WithOrigins("https://cloudflareblazortrial.pages.dev")
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType));
 }
 
 app.UseHttpsRedirection();
